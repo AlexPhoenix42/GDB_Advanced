@@ -79,5 +79,7 @@ Feel free to fork, improve, or submit issues! If you’ve got a clever extension
 ## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
+---
+
 ## Powered by github.com/AlexPhoenix42 🌈🚀
 https://github.com/AlexPhoenix42
