@@ -1,0 +1,46 @@
+# Load the target binary
+# Replace './your_program' with the path to your executable
+file ./your_program
+
+# Allow breakpoints to be set even if symbols aren't loaded yet
+set breakpoint pending on
+
+# Set program arguments if needed
+# Replace 'your_args' with actual arguments
+set args your_args
+
+# Enable TUI mode (optional)
+tui enable
+
+# ==============================================================
+# Conditional Breakpoint Setup
+# --------------------------------------------------------------
+# This setup allows breakpoint B to trigger only after breakpoint A has been hit.
+# It uses a GDB convenience variable ($bp2hit) as a flag.
+# ==============================================================
+
+# Start the program and pause at main
+start
+
+# Initialize the flag variable
+set $bp2hit = 0
+
+# Breakpoint A: sets the flag when hit
+# Replace 'source_file.c:line_number' with the actual location
+break source_file.c:line_number
+commands
+  set $bp2hit = 1
+  # Optional: start logging when this breakpoint is hit
+  # Replace '/dev/pts/X' with your terminal (use `tty` to find it)
+  set logging file /dev/pts/X
+  set logging enable on
+  # Avoid using 'continue' here to prevent GDB crashes
+end
+
+# Breakpoint B: only triggers if flag is set, then resets it
+# Replace 'function_name' with the actual function or location
+break function_name if $bp2hit == 1
+commands
+  set $bp2hit = 0
+  # Avoid using 'continue' here to prevent GDB crashes
+end
