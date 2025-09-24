@@ -1,0 +1,13 @@
+function vgdbme_start
+    if test (count $argv) -eq 0
+        echo "Usage: debug_valgrind <program_to_debug> [gdb_args...]"
+        return 1
+    end
+
+    set program $argv[1]
+    set gdb_args $argv[2..-1]
+
+    # Use command substitution outside the quoted string
+    set pid (cat valgrind.pid)
+    gdb $program $gdb_args -ex "target remote | vgdb --pid=$pid"
+end
